@@ -12,7 +12,7 @@ export function getAllTerms(): Term[] {
 
 /**
  * 根据关键词搜索术语
- * 按术语名称和释义模糊匹配
+ * 按术语名称、释义和关联技艺名称模糊匹配
  */
 export function filterTerms(params: TermFilterParams): Term[] {
   const { keyword = '' } = params;
@@ -23,9 +23,12 @@ export function filterTerms(params: TermFilterParams): Term[] {
   }
 
   return terms.filter((term) => {
-    return (
-      term.name.toLowerCase().includes(trimmedKeyword) ||
-      term.definition.toLowerCase().includes(trimmedKeyword)
+    const matchesName = term.name.toLowerCase().includes(trimmedKeyword);
+    const matchesDefinition = term.definition.toLowerCase().includes(trimmedKeyword);
+    const matchesRelatedCraft = term.relatedCraftNames.some((craftName) =>
+      craftName.toLowerCase().includes(trimmedKeyword),
     );
+
+    return matchesName || matchesDefinition || matchesRelatedCraft;
   });
 }

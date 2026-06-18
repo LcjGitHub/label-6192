@@ -6,6 +6,7 @@ export interface Term {
   name: string;
   definition: string;
   relatedCraftIds: string[];
+  relatedCraftNames: string[];
 }
 
 /**

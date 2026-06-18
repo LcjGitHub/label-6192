@@ -36,7 +36,7 @@ export default function Layout() {
               title="非遗术语词典"
             >
               <BookOpenIcon className="h-4 w-4" />
-              <span className="hidden sm:inline">术语词典</span>
+              <span>术语词典</span>
             </Link>
             <button
               type="button"

@@ -8,7 +8,7 @@ import {
   BookOpenIcon,
   ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import { filterTerms } from '../data/terms';
+import { filterTerms, getAllTerms } from '../data/terms';
 import { getCraftById } from '../data/crafts';
 
 /**
@@ -20,6 +20,7 @@ import { getCraftById } from '../data/crafts';
  */
 export default function TermDictionaryPage() {
   const [keyword, setKeyword] = useState('');
+  const allTerms = useMemo(() => getAllTerms(), []);
 
   const filteredTerms = useMemo(() => {
     return filterTerms({ keyword });
@@ -64,16 +65,16 @@ export default function TermDictionaryPage() {
           )}
         </div>
 
-        {hasKeyword && (
-          <div className="mx-auto mt-4 max-w-2xl text-center text-sm text-gray-500">
-            找到 <span className="font-medium text-heritage-600">{filteredTerms.length}</span> 个术语
-            {keyword && (
+        <div className="mx-auto mt-4 max-w-2xl text-center text-sm text-gray-500">
+          共 <span className="font-medium text-heritage-600">{allTerms.length}</span> 个术语
+          {hasKeyword && (
+            <span>
+              ，匹配 <span className="font-medium text-heritage-600">{filteredTerms.length}</span> 个
               <span>
-                ，关键词：<span className="font-medium text-heritage-600">「{keyword}」</span>
-              </span>
-            )}
-          </div>
-        )}
+                ，关键词：<span className="font-medium text-heritage-600">「{keyword}」</span></span>
+            </span>
+          )}
+        </div>
       </section>
 
       {filteredTerms.length > 0 ? (

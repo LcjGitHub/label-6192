@@ -3,120 +3,140 @@
     "id": "xuan-paper",
     "name": "宣纸",
     "definition": "原产于安徽宣城的高级书画用纸，以青檀皮和沙田稻草为主要原料，质地柔韧、洁白细密、耐久不变色，被誉为「纸寿千年」，是传统书画及剪纸等工艺的重要载体。",
-    "relatedCraftIds": ["paper-cutting", "paper-cutting-spring"]
+    "relatedCraftIds": ["paper-cutting", "paper-cutting-spring"],
+    "relatedCraftNames": ["剪纸", "窗花剪纸"]
   },
   {
     "id": "paper-cutting-yin-yang",
     "name": "阴阳剪",
     "definition": "剪纸的基本表现手法。阳剪以线条为主，保留图案轮廓线，剪去轮廓以外的部分；阴剪以块面为主，剪去图案轮廓线以内的部分，呈现镂空效果。二者常结合使用。",
-    "relatedCraftIds": ["paper-cutting", "paper-cutting-spring"]
+    "relatedCraftIds": ["paper-cutting", "paper-cutting-spring"],
+    "relatedCraftNames": ["剪纸", "窗花剪纸"]
   },
   {
     "id": "paper-cutting-fold",
     "name": "折叠剪纸",
     "definition": "将纸张对折或多次折叠后进行剪刻的剪纸技法，利用纸张的对称性一次剪出连续或对称的图案，常见于窗花制作，可产生四面均齐、八面对称等效果。",
-    "relatedCraftIds": ["paper-cutting", "paper-cutting-spring"]
+    "relatedCraftIds": ["paper-cutting", "paper-cutting-spring"],
+    "relatedCraftNames": ["剪纸", "窗花剪纸"]
   },
   {
     "id": "indigo-natural",
     "name": "天然靛蓝",
     "definition": "从蓝草（如板蓝根、木蓝、马蓝等植物）中提取的天然蓝色染料，是中国传统染织工艺中历史最悠久的染料之一，染色牢度好，色泽沉稳典雅。",
-    "relatedCraftIds": ["indigo-dye", "tie-dye"]
+    "relatedCraftIds": ["indigo-dye", "tie-dye"],
+    "relatedCraftNames": ["蓝染", "扎染"]
   },
   {
     "id": "batik",
     "name": "蜡染",
     "definition": "古称「蜡缬」，传统防染印花工艺之一。用蜡液在布料上绘制图案后浸染，蜡的防染作用使图案区域不着色，再经脱蜡处理呈现蓝白相间的花纹，纹样常带有自然冰裂纹。",
-    "relatedCraftIds": ["indigo-dye"]
+    "relatedCraftIds": ["indigo-dye"],
+    "relatedCraftNames": ["蓝染"]
   },
   {
     "id": "tie-dye-technique",
     "name": "扎染",
     "definition": "古称「绞缬」，传统防染印花工艺之一。通过捆扎、缝缀、折叠等方式将布料局部扎紧后浸染，扎结处因染料无法渗透形成自然晕染纹样，图案丰富多变，每件作品独一无二。",
-    "relatedCraftIds": ["tie-dye", "indigo-dye"]
+    "relatedCraftIds": ["tie-dye", "indigo-dye"],
+    "relatedCraftNames": ["扎染", "蓝染"]
   },
   {
     "id": "kaolin",
     "name": "高岭土",
     "definition": "又称瓷土，以高岭石为主要成分的白色黏土，因最早发现于江西景德镇高岭村而得名。是制作瓷器的主要原料，具有质地纯净、耐火度高、可塑性好等特点。",
-    "relatedCraftIds": ["porcelain"]
+    "relatedCraftIds": ["porcelain"],
+    "relatedCraftNames": ["青花瓷"]
   },
   {
     "id": "underglaze-blue",
     "name": "釉下彩",
     "definition": "陶瓷装饰技法的一种。在素烧或未烧的瓷胎上进行彩绘，然后罩上一层透明釉，入窑经高温一次烧成。纹饰在釉层之下，永不褪色，青花瓷是釉下彩的典型代表。",
-    "relatedCraftIds": ["porcelain"]
+    "relatedCraftIds": ["porcelain"],
+    "relatedCraftNames": ["青花瓷"]
   },
   {
     "id": "cobalt-blue",
     "name": "青花料",
     "definition": "又称钴料，绘制青花瓷纹饰的主要颜料，以氧化钴为主要呈色元素。产地不同的青花料发色各异，如国产的浙料、云南珠明料，进口的苏麻离青等，各有特色。",
-    "relatedCraftIds": ["porcelain"]
+    "relatedCraftIds": ["porcelain"],
+    "relatedCraftNames": ["青花瓷"]
   },
   {
     "id": "wood-carving-blank",
     "name": "打坯",
     "definition": "木雕工艺的基础步骤，又称「出大样」。用锯、斧、大凿等工具将多余木料去除，雕出作品的大体轮廓和主要比例关系，为后续精细雕刻奠定基础。",
-    "relatedCraftIds": ["wood-carving"]
+    "relatedCraftIds": ["wood-carving"],
+    "relatedCraftNames": ["木雕"]
   },
   {
     "id": "wood-carving-chisel",
     "name": "木雕刀法",
     "definition": "木雕创作中使用各种刀具的技法，常见的有平刀、圆刀、斜刀、三角刀等。不同刀法产生不同的艺术效果，如平刀的块面感、圆刀的圆润感、斜刀的锋利感，是木雕艺术的语言。",
-    "relatedCraftIds": ["wood-carving"]
+    "relatedCraftIds": ["wood-carving"],
+    "relatedCraftNames": ["木雕"]
   },
   {
     "id": "boxwood",
     "name": "黄杨木",
     "definition": "常绿灌木黄杨的木材，质地坚韧细密、纹理美观、色彩温润呈淡黄色，是高档木雕的常用材料。生长极其缓慢，有「千年矮」之称，故黄杨木雕尤为珍贵。",
-    "relatedCraftIds": ["wood-carving"]
+    "relatedCraftIds": ["wood-carving"],
+    "relatedCraftNames": ["木雕"]
   },
   {
     "id": "embroidery-needlework",
     "name": "苏绣针法",
     "definition": "苏绣工艺中丰富多样的刺绣技法，常见有齐针、套针、施针、乱针、滚针、打籽针等数十种。不同针法表现不同的纹理与质感，如套针表现色彩过渡，施针表现毛发质感。",
-    "relatedCraftIds": ["embroidery"]
+    "relatedCraftIds": ["embroidery"],
+    "relatedCraftNames": ["苏绣"]
   },
   {
     "id": "embroidery-silk",
     "name": "劈丝",
     "definition": "刺绣工艺中将一根蚕丝线分成若干更细线缕的技法。苏绣劈丝可达数十份之细，使绣品色彩过渡更自然、层次更丰富，达到细腻逼真的艺术效果。",
-    "relatedCraftIds": ["embroidery"]
+    "relatedCraftIds": ["embroidery"],
+    "relatedCraftNames": ["苏绣"]
   },
   {
     "id": "embroidery-frame",
     "name": "绣绷",
     "definition": "刺绣时用来绷紧底料的工具，有圆形、方形、长方形等多种规格。将底料固定在绣绷上，可保持布料平整，便于运针施绣，是传统刺绣必备工具。",
-    "relatedCraftIds": ["embroidery"]
+    "relatedCraftIds": ["embroidery"],
+    "relatedCraftNames": ["苏绣"]
   },
   {
     "id": "bamboo-strip",
     "name": "竹篾",
     "definition": "将竹子剖劈而成的细长薄条，是竹编工艺的基本材料。根据竹材部位可分为篾青（竹子外皮，质地坚韧）和篾黄（竹子内层，质地较软），根据用途可劈成不同粗细厚薄。",
-    "relatedCraftIds": ["bamboo-weaving"]
+    "relatedCraftIds": ["bamboo-weaving"],
+    "relatedCraftNames": ["竹编"]
   },
   {
     "id": "bamboo-weave-warp-weft",
     "name": "经纬编织",
     "definition": "竹编的基本技法，纵向为经、横向为纬，通过挑一压一、挑二压二等不同的经纬交织方式形成编织纹理，变化万千。几乎所有竹编制品都以经纬编织为基础。",
-    "relatedCraftIds": ["bamboo-weaving"]
+    "relatedCraftIds": ["bamboo-weaving"],
+    "relatedCraftNames": ["竹编"]
   },
   {
     "id": "moso-bamboo",
     "name": "毛竹",
     "definition": "又称楠竹，中国分布最广、产量最大的竹种，也是竹编工艺最常用的原材料。毛竹竹秆粗大、竹节长、竹壁厚、韧性好，适合劈制各种规格的竹篾。",
-    "relatedCraftIds": ["bamboo-weaving"]
+    "relatedCraftIds": ["bamboo-weaving"],
+    "relatedCraftNames": ["竹编"]
   },
   {
     "id": "intangible-heritage",
     "name": "非物质文化遗产",
     "definition": "简称「非遗」，指被各群体、团体、有时为个人所视为其文化遗产的各种实践、表演、表现形式、知识体系和技能及其有关的工具、实物、工艺品和文化场所，具有世代传承、活态存在的特点。",
-    "relatedCraftIds": ["paper-cutting", "indigo-dye", "porcelain", "wood-carving", "embroidery", "bamboo-weaving"]
+    "relatedCraftIds": ["paper-cutting", "indigo-dye", "porcelain", "wood-carving", "embroidery", "bamboo-weaving"],
+    "relatedCraftNames": ["剪纸", "蓝染", "青花瓷", "木雕", "苏绣", "竹编"]
   },
   {
     "id": "craft-inheritance",
     "name": "师徒传承",
     "definition": "传统手工艺最主要的传承方式，师傅通过口传心授、示范指导将技艺传授给徒弟，徒弟在长期实践中逐渐掌握技艺精髓，使传统工艺得以代代延续。",
-    "relatedCraftIds": ["paper-cutting", "indigo-dye", "porcelain", "wood-carving", "embroidery", "bamboo-weaving"]
+    "relatedCraftIds": ["paper-cutting", "indigo-dye", "porcelain", "wood-carving", "embroidery", "bamboo-weaving"],
+    "relatedCraftNames": ["剪纸", "蓝染", "青花瓷", "木雕", "苏绣", "竹编"]
   }
 ]
