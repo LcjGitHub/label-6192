@@ -45,3 +45,16 @@ export interface CraftFilterParams {
   keyword?: string;
   category?: CraftCategory | 'all';
 }
+
+/**
+ * 学习进度记录
+ *
+ * 以技艺 id 为键，记录已学习的最高步骤序号（从 1 开始计数）。
+ * 例如 `{ 'paper-cutting': 3 }` 表示剪纸技艺已学到第 3 步。
+ */
+export type CraftProgressMap = Record<string, number>;
+
+/**
+ * 进度变更监听器
+ */
+export type ProgressListener = () => void;

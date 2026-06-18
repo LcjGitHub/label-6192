@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Tab, TabGroup, TabList } from '@headlessui/react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
@@ -6,6 +6,8 @@ import { getCraftById } from '../data/crafts';
 import StepSwiper from '../components/StepSwiper';
 import StepTabs from '../components/StepTabs';
 import FavoriteButton from '../components/FavoriteButton';
+import { useProgress } from '../hooks/useProgress';
+import { getProgress as readProgress } from '../utils/progress';
 
 type ViewMode = 'swiper' | 'tabs';
 
@@ -30,7 +32,27 @@ export default function CraftDetailPage() {
   const backHref = state?.from ?? '/';
 
   const [viewMode, setViewMode] = useState<ViewMode>('swiper');
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const initialSavedProgress = craft ? readProgress(craft.id) : 0;
+  const totalSteps = craft?.steps.length ?? 1;
+  const initialIndex = initialSavedProgress > 0
+    ? Math.min(initialSavedProgress - 1, totalSteps - 1)
+    : 0;
+  const [activeStepIndex, setActiveStepIndex] = useState(initialIndex);
+
+  const { getProgress, updateProgress } = useProgress();
+
+  useEffect(() => {
+    if (!craft) return;
+    const stepOrder = activeStepIndex + 1;
+    updateProgress(craft.id, stepOrder);
+  }, [activeStepIndex, craft?.id, updateProgress]);
+
+  useEffect(() => {
+    if (!craft) return;
+    const saved = readProgress(craft.id);
+    const targetIndex = saved > 0 ? Math.min(saved - 1, craft.steps.length - 1) : 0;
+    setActiveStepIndex(targetIndex);
+  }, [craft?.id]);
 
   if (!craft) {
     return (
@@ -77,6 +99,25 @@ export default function CraftDetailPage() {
           <FavoriteButton craftId={craft.id} size="lg" className="p-2 hover:bg-gray-100" />
         </div>
         <p className="max-w-2xl leading-relaxed text-gray-600">{craft.summary}</p>
+        <div className="mt-4 max-w-2xl">
+          <div className="mb-1.5 flex items-center justify-between text-sm">
+            <span className="font-medium text-heritage-700">
+              学习进度：已学 {Math.min(getProgress(craft.id), craft.steps.length)} / {craft.steps.length} 步
+            </span>
+            <span className="text-gray-500">
+              {Math.round((Math.min(getProgress(craft.id), craft.steps.length) / craft.steps.length) * 100)}%
+            </span>
+          </div>
+          <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+            <div
+              className="h-full rounded-full transition-all duration-500 ease-out"
+              style={{
+                width: `${(Math.min(getProgress(craft.id), craft.steps.length) / craft.steps.length) * 100}%`,
+                backgroundColor: craft.coverColor,
+              }}
+            />
+          </div>
+        </div>
       </header>
 
       <TabGroup
@@ -115,6 +156,7 @@ export default function CraftDetailPage() {
           accentColor={craft.coverColor}
           activeIndex={activeStepIndex}
           onSlideChange={setActiveStepIndex}
+          progress={getProgress(craft.id)}
         />
       ) : (
         <StepTabs
@@ -122,6 +164,7 @@ export default function CraftDetailPage() {
           accentColor={craft.coverColor}
           selectedIndex={activeStepIndex}
           onChange={setActiveStepIndex}
+          progress={getProgress(craft.id)}
         />
       )}
 

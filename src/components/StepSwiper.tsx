@@ -2,7 +2,8 @@ import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, ChevronRightIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { CheckIcon as CheckSolidIcon } from '@heroicons/react/24/solid';
 import type { CraftStep } from '../types/craft';
 import StepPlaceholder from './StepPlaceholder';
 
@@ -11,6 +12,7 @@ interface StepSwiperProps {
   accentColor: string;
   activeIndex: number;
   onSlideChange: (index: number) => void;
+  progress?: number;
 }
 
 /**
@@ -21,6 +23,7 @@ export default function StepSwiper({
   accentColor,
   activeIndex,
   onSlideChange,
+  progress = 0,
 }: StepSwiperProps) {
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -38,25 +41,34 @@ export default function StepSwiper({
         pagination={{ clickable: true }}
         className="step-swiper rounded-xl pb-10"
       >
-        {steps.map((step) => (
-          <SwiperSlide key={step.id}>
-            <article className="overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm">
-              <StepPlaceholder step={step} accentColor={accentColor} />
-              <div className="p-6">
-                <div className="mb-2 flex items-center gap-2">
-                  <span
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full text-sm font-semibold text-white"
-                    style={{ backgroundColor: accentColor }}
-                  >
-                    {step.order}
-                  </span>
-                  <h3 className="font-serif text-xl font-semibold text-heritage-900">{step.title}</h3>
+        {steps.map((step) => {
+          const isCompleted = step.order <= progress;
+          return (
+            <SwiperSlide key={step.id}>
+              <article className="overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm">
+                <StepPlaceholder step={step} accentColor={accentColor} />
+                <div className="p-6">
+                  <div className="mb-2 flex items-center gap-2">
+                    <span
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-full text-sm font-semibold text-white"
+                      style={{ backgroundColor: isCompleted ? '#16a34a' : accentColor }}
+                    >
+                      {isCompleted ? <CheckSolidIcon className="h-4 w-4" /> : step.order}
+                    </span>
+                    <h3 className="font-serif text-xl font-semibold text-heritage-900">{step.title}</h3>
+                    {isCompleted && (
+                      <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                        <CheckIcon className="h-3 w-3" />
+                        已学习
+                      </span>
+                    )}
+                  </div>
+                  <p className="leading-relaxed text-gray-600">{step.description}</p>
                 </div>
-                <p className="leading-relaxed text-gray-600">{step.description}</p>
-              </div>
-            </article>
-          </SwiperSlide>
-        ))}
+              </article>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
 
       <button

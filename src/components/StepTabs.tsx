@@ -1,4 +1,5 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/24/solid';
 import type { CraftStep } from '../types/craft';
 import StepPlaceholder from './StepPlaceholder';
 
@@ -7,31 +8,40 @@ interface StepTabsProps {
   accentColor: string;
   selectedIndex: number;
   onChange: (index: number) => void;
+  progress?: number;
 }
 
 /**
  * 步骤 Headless UI Tab 分步浏览
  */
-export default function StepTabs({ steps, accentColor, selectedIndex, onChange }: StepTabsProps) {
+export default function StepTabs({ steps, accentColor, selectedIndex, onChange, progress = 0 }: StepTabsProps) {
   return (
     <TabGroup selectedIndex={selectedIndex} onChange={onChange}>
       <TabList className="flex flex-wrap gap-2 rounded-xl bg-heritage-100 p-2">
-        {steps.map((step) => (
-          <Tab
-            key={step.id}
-            className={({ selected }) =>
-              [
-                'rounded-lg px-4 py-2 text-sm font-medium outline-none transition',
-                'focus-visible:ring-2 focus-visible:ring-heritage-400 focus-visible:ring-offset-2',
-                selected
-                  ? 'bg-white text-heritage-800 shadow-sm'
-                  : 'text-heritage-600 hover:bg-white/60 hover:text-heritage-800',
-              ].join(' ')
-            }
-          >
-            第 {step.order} 步
-          </Tab>
-        ))}
+        {steps.map((step) => {
+          const isCompleted = step.order <= progress;
+          return (
+            <Tab
+              key={step.id}
+              className={({ selected }) =>
+                [
+                  'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium outline-none transition',
+                  'focus-visible:ring-2 focus-visible:ring-heritage-400 focus-visible:ring-offset-2',
+                  selected
+                    ? 'bg-white text-heritage-800 shadow-sm'
+                    : isCompleted
+                      ? 'text-heritage-600 hover:bg-white/60 hover:text-heritage-800'
+                      : 'text-heritage-600 hover:bg-white/60 hover:text-heritage-800',
+                ].join(' ')
+              }
+            >
+              {isCompleted && (
+                <CheckIcon className="h-4 w-4 text-green-600" />
+              )}
+              第 {step.order} 步
+            </Tab>
+          );
+        })}
       </TabList>
 
       <TabPanels className="mt-6">
