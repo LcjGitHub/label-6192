@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Tab, TabGroup, TabList } from '@headlessui/react';
 import { MagnifyingGlassIcon, XMarkIcon, FunnelIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { filterCrafts, getAllCategories } from '../data/crafts';
+import { getAllCategories, searchCrafts } from '../data/crafts';
 import CraftCard from '../components/CraftCard';
 import FavoriteList from '../components/FavoriteList';
 import type { CraftCategory } from '../types/craft';
@@ -36,7 +36,11 @@ export default function CraftListPage() {
   };
 
   const filteredCrafts = useMemo(() => {
-    return filterCrafts({ keyword, category: selectedCategory });
+    const searched = searchCrafts(keyword);
+    if (selectedCategory === 'all') {
+      return searched;
+    }
+    return searched.filter((craft) => craft.category === selectedCategory);
   }, [keyword, selectedCategory]);
 
   const hasActiveFilter = keyword.trim() !== '' || selectedCategory !== 'all';
@@ -55,6 +59,34 @@ export default function CraftListPage() {
         <p className="mx-auto mt-3 max-w-xl text-gray-600">
           选择一门传统技艺，按步骤了解其制作流程与工艺要点。
         </p>
+      </section>
+
+      <section className="mb-8">
+        <div className="relative mx-auto max-w-2xl">
+          <MagnifyingGlassIcon className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="搜索技艺名称或简介..."
+            className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-12 text-base text-gray-900 placeholder-gray-400 shadow-sm focus:border-heritage-500 focus:outline-none focus:ring-2 focus:ring-heritage-500/20"
+          />
+          {keyword && (
+            <button
+              type="button"
+              onClick={() => setKeyword('')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              aria-label="清除搜索"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
+          )}
+        </div>
+        {keyword.trim() !== '' && (
+          <p className="mt-3 text-center text-sm text-gray-500">
+            正在搜索：<span className="font-medium text-heritage-600">「{keyword}」</span>
+          </p>
+        )}
       </section>
 
       <TabGroup selectedIndex={tabIndex} onChange={handleTabChange}>
@@ -86,44 +118,21 @@ export default function CraftListPage() {
         </TabList>
 
         <Tab.Panel>
-          <section className="mb-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <div className="relative flex-1">
-                <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  value={keyword}
-                  onChange={(e) => setKeyword(e.target.value)}
-                  placeholder="搜索技艺名称或简介..."
-                  className="w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-10 text-gray-900 placeholder-gray-400 shadow-sm focus:border-heritage-500 focus:outline-none focus:ring-2 focus:ring-heritage-500/20"
-                />
-                {keyword && (
-                  <button
-                    type="button"
-                    onClick={() => setKeyword('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    aria-label="清除搜索"
-                  >
-                    <XMarkIcon className="h-5 w-5" />
-                  </button>
-                )}
-              </div>
-
-              <div className="flex w-full items-center gap-2 sm:w-auto">
-                <FunnelIcon className="h-5 w-5 shrink-0 text-gray-400" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value as CraftCategory | 'all')}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm focus:border-heritage-500 focus:outline-none focus:ring-2 focus:ring-heritage-500/20 sm:w-auto"
-                >
-                  <option value="all">全部分类</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <section className="mb-6">
+            <div className="flex w-full items-center gap-2 sm:w-auto">
+              <FunnelIcon className="h-5 w-5 shrink-0 text-gray-400" />
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value as CraftCategory | 'all')}
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm focus:border-heritage-500 focus:outline-none focus:ring-2 focus:ring-heritage-500/20 sm:w-auto"
+              >
+                <option value="all">全部分类</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {hasActiveFilter && (
@@ -163,7 +172,7 @@ export default function CraftListPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
                 <MagnifyingGlassIcon className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900">暂无匹配结果</h3>
+              <h3 className="text-lg font-medium text-gray-900">未找到相关技艺</h3>
               <p className="mx-auto mt-2 max-w-sm text-sm text-gray-500">
                 {hasActiveFilter
                   ? '没有找到符合条件的技艺，请尝试调整搜索关键词或更换分类筛选条件。'
@@ -183,7 +192,7 @@ export default function CraftListPage() {
         </Tab.Panel>
 
         <Tab.Panel>
-          <FavoriteList />
+          <FavoriteList keyword={keyword} />
         </Tab.Panel>
       </TabGroup>
     </div>
