@@ -4,6 +4,7 @@
     "name": "剪纸",
     "summary": "以剪刀或刻刀在纸上剪刻纹样，寓意吉祥，是流传广泛的民间装饰艺术。",
     "coverColor": "#c62828",
+    "category": "剪纸类",
     "steps": [
       {
         "id": "pc-1",
@@ -54,6 +55,7 @@
     "name": "蓝染",
     "summary": "以天然靛蓝为染料，通过浸染与氧化呈现层次蓝色，常见于蜡染、扎染等传统工艺。",
     "coverColor": "#1565c0",
+    "category": "染织类",
     "steps": [
       {
         "id": "id-1",
@@ -89,6 +91,284 @@
         "title": "清洗固色",
         "description": "染毕后拆线或去蜡，用清水反复漂洗至水清，必要时使用固色剂，避免后续褪色。",
         "imagePlaceholder": "清洗固色"
+      }
+    ]
+  },
+  {
+    "id": "porcelain",
+    "name": "青花瓷",
+    "summary": "以钴料在白瓷胎上描绘纹饰，再罩透明釉，经高温一次烧成的釉下彩瓷器。",
+    "coverColor": "#0d47a1",
+    "category": "陶瓷类",
+    "steps": [
+      {
+        "id": "por-1",
+        "order": 1,
+        "title": "选土制胎",
+        "description": "选用优质高岭土，经淘洗、沉淀、揉泥等工序去除杂质，制成均匀细腻的瓷泥。",
+        "imagePlaceholder": "瓷泥制备"
+      },
+      {
+        "id": "por-2",
+        "order": 2,
+        "title": "拉坯成形",
+        "description": "将瓷泥置于辘轳上，通过手工拉坯或模制成形，阴干后修坯，使器形规整厚薄均匀。",
+        "imagePlaceholder": "拉坯成形"
+      },
+      {
+        "id": "por-3",
+        "order": 3,
+        "title": "素烧定型",
+        "description": "将修好的坯体入窑低温素烧，温度约800℃，使坯体硬化便于后续绘饰。",
+        "imagePlaceholder": "素烧定型"
+      },
+      {
+        "id": "por-4",
+        "order": 4,
+        "title": "描青设色",
+        "description": "用青花料在素烧坯上描绘纹饰，根据图案深浅调整料水浓度，注意线条流畅。",
+        "imagePlaceholder": "青花描绘"
+      },
+      {
+        "id": "por-5",
+        "order": 5,
+        "title": "施釉罩面",
+        "description": "在绘好的坯体上均匀施一层透明釉，可采用喷釉、浸釉等方式，确保釉层厚薄一致。",
+        "imagePlaceholder": "施釉工艺"
+      },
+      {
+        "id": "por-6",
+        "order": 6,
+        "title": "高温烧成",
+        "description": "入窑经1300℃左右高温一次烧成，釉下青花发色明亮，呈现出青翠欲滴的蓝色。",
+        "imagePlaceholder": "高温烧成"
+      }
+    ]
+  },
+  {
+    "id": "wood-carving",
+    "name": "木雕",
+    "summary": "以各种木材为原料，雕刻出各种造型的传统工艺，讲究刀法细腻、栩栩如生。",
+    "coverColor": "#5d4037",
+    "category": "木作类",
+    "steps": [
+      {
+        "id": "wc-1",
+        "order": 1,
+        "title": "选材干燥",
+        "description": "选用质地细密、纹理美观的木材如黄杨、紫檀、花梨等，经自然干燥或人工烘干处理。",
+        "imagePlaceholder": "木材选择"
+      },
+      {
+        "id": "wc-2",
+        "order": 2,
+        "title": "设计放样",
+        "description": "根据题材设计图样，将图纸拷贝到木料上，勾勒出大致轮廓与层次关系。",
+        "imagePlaceholder": "图样设计"
+      },
+      {
+        "id": "wc-3",
+        "order": 3,
+        "title": "打坯出粗",
+        "description": "用大凿、锯等工具去掉多余木料，打出作品的大体轮廓和主要结构比例。",
+        "imagePlaceholder": "打坯工艺"
+      },
+      {
+        "id": "wc-4",
+        "order": 4,
+        "title": "细雕精刻",
+        "description": "运用平刀、圆刀、斜刀等各种刀具，由浅入深进行精细雕刻，表现细节与质感。",
+        "imagePlaceholder": "精细雕刻"
+      },
+      {
+        "id": "wc-5",
+        "order": 5,
+        "title": "修光打磨",
+        "description": "用细刀修光，再用砂纸由粗到细逐步打磨，使表面光滑圆润，层次分明。",
+        "imagePlaceholder": "修光打磨"
+      },
+      {
+        "id": "wc-6",
+        "order": 6,
+        "title": "上蜡髹漆",
+        "description": "根据需要进行烫蜡或髹漆处理，保护木质并提升光泽，最后配座装裱完成。",
+        "imagePlaceholder": "上漆完成"
+      }
+    ]
+  },
+  {
+    "id": "embroidery",
+    "name": "苏绣",
+    "summary": "江苏苏州地区的传统刺绣工艺，以精细、雅洁著称，图案秀丽、针法活泼。",
+    "coverColor": "#ad1457",
+    "category": "刺绣类",
+    "steps": [
+      {
+        "id": "emb-1",
+        "order": 1,
+        "title": "设计绣稿",
+        "description": "根据刺绣主题设计图样，考虑色彩搭配与针法运用，将画稿拷贝到绣绷上。",
+        "imagePlaceholder": "绣稿设计"
+      },
+      {
+        "id": "emb-2",
+        "order": 2,
+        "title": "配线选料",
+        "description": "选用真丝缎面为底料，蚕丝线为绣线，根据画稿配色，将丝线劈成所需细度。",
+        "imagePlaceholder": "配线选料"
+      },
+      {
+        "id": "emb-3",
+        "order": 3,
+        "title": "上绷定位",
+        "description": "将底料绷紧在绣架上，用线框出绣稿轮廓，确保底料平整无褶皱。",
+        "imagePlaceholder": "上绷工艺"
+      },
+      {
+        "id": "emb-4",
+        "order": 4,
+        "title": "刺绣成形",
+        "description": "运用齐针、套针、施针等多种针法，由内向外、由浅入深逐步绣制，注意丝线走向。",
+        "imagePlaceholder": "刺绣过程"
+      },
+      {
+        "id": "emb-5",
+        "order": 5,
+        "title": "细部处理",
+        "description": "对人物五官、鸟兽羽毛等精细部位进行细致刻画，用色线过渡表现层次。",
+        "imagePlaceholder": "细部处理"
+      },
+      {
+        "id": "emb-6",
+        "order": 6,
+        "title": "下绷装裱",
+        "description": "完成后小心下绷，熨烫平整，配以传统书画装裱方式，制成精美绣品。",
+        "imagePlaceholder": "装裱完成"
+      }
+    ]
+  },
+  {
+    "id": "bamboo-weaving",
+    "name": "竹编",
+    "summary": "以竹子为原料，经剖劈、编织等工序制成各种实用器具和工艺品的传统技艺。",
+    "coverColor": "#2e7d32",
+    "category": "编织类",
+    "steps": [
+      {
+        "id": "bw-1",
+        "order": 1,
+        "title": "选竹伐料",
+        "description": "选用生长3-5年的优质毛竹或慈竹，要求节长、肉厚、无虫蛀，砍伐后及时加工。",
+        "imagePlaceholder": "竹子选择"
+      },
+      {
+        "id": "bw-2",
+        "order": 2,
+        "title": "剖竹劈篾",
+        "description": "将竹子截成适当长度，用刀劈成粗细均匀的竹篾，根据需要分为篾青、篾黄。",
+        "imagePlaceholder": "劈篾工艺"
+      },
+      {
+        "id": "bw-3",
+        "order": 3,
+        "title": "煮篾染色",
+        "description": "将竹篾放入锅中煮沸防虫蛀，如需染色则放入染料中煮制，晾干后备用。",
+        "imagePlaceholder": "煮篾染色"
+      },
+      {
+        "id": "bw-4",
+        "order": 4,
+        "title": "起底编织",
+        "description": "根据器物形状起底，采用经纬交织法编织底部，注意篾条均匀、紧密平整。",
+        "imagePlaceholder": "起底编织"
+      },
+      {
+        "id": "bw-5",
+        "order": 5,
+        "title": "编身做形",
+        "description": "从底部向上编织器身，运用挑一压一、挑二压二等多种技法，塑造器物造型。",
+        "imagePlaceholder": "编身做形"
+      },
+      {
+        "id": "bw-6",
+        "order": 6,
+        "title": "锁口收边",
+        "description": "编织至所需高度后进行锁口处理，配上把手或盖，打磨光滑后完成制作。",
+        "imagePlaceholder": "锁口完成"
+      }
+    ]
+  },
+  {
+    "id": "paper-cutting-spring",
+    "name": "窗花剪纸",
+    "summary": "春节期间张贴于窗户上的剪纸装饰，题材多为喜庆吉祥图案，烘托节日气氛。",
+    "coverColor": "#e53935",
+    "category": "剪纸类",
+    "steps": [
+      {
+        "id": "pcs-1",
+        "order": 1,
+        "title": "选纸配色",
+        "description": "选用大红色宣纸或蜡光纸，色彩鲜艳纯正，寓意喜庆吉祥。",
+        "imagePlaceholder": "选纸配色"
+      },
+      {
+        "id": "pcs-2",
+        "order": 2,
+        "title": "设计图样",
+        "description": "设计福字、生肖、花鸟等吉祥图案，讲究对称饱满、寓意美好。",
+        "imagePlaceholder": "图样设计"
+      },
+      {
+        "id": "pcs-3",
+        "order": 3,
+        "title": "折叠剪刻",
+        "description": "将纸多次对折，用剪刀或刻刀剪出纹样，利用折叠形成对称图案。",
+        "imagePlaceholder": "剪刻过程"
+      },
+      {
+        "id": "pcs-4",
+        "order": 4,
+        "title": "展开整理",
+        "description": "小心展开剪好的窗花，用毛刷轻轻抚平，粘贴于窗户玻璃上。",
+        "imagePlaceholder": "张贴展示"
+      }
+    ]
+  },
+  {
+    "id": "tie-dye",
+    "name": "扎染",
+    "summary": "通过捆扎、缝缀等方式使布料产生防染效果，形成独特晕染纹样的染织工艺。",
+    "coverColor": "#283593",
+    "category": "染织类",
+    "steps": [
+      {
+        "id": "td-1",
+        "order": 1,
+        "title": "布料准备",
+        "description": "选用纯棉、真丝等天然面料，洗净退浆，保持湿润备用。",
+        "imagePlaceholder": "布料准备"
+      },
+      {
+        "id": "td-2",
+        "order": 2,
+        "title": "扎结造型",
+        "description": "用线绳捆扎、缝缀、夹缚等方式在布料上形成图案，扎结松紧决定纹样效果。",
+        "imagePlaceholder": "扎结造型"
+      },
+      {
+        "id": "td-3",
+        "order": 3,
+        "title": "浸染发色",
+        "description": "将扎好的布料浸入染液，可多次浸染叠加色彩，每次浸染后氧化固色。",
+        "imagePlaceholder": "浸染工艺"
+      },
+      {
+        "id": "td-4",
+        "order": 4,
+        "title": "拆线固色",
+        "description": "染好后小心拆线，用清水漂洗去除浮色，晾干后呈现自然晕染效果。",
+        "imagePlaceholder": "成品展示"
       }
     ]
   }

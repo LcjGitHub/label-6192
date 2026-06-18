@@ -1,4 +1,9 @@
 /**
+ * 技艺分类
+ */
+export type CraftCategory = '剪纸类' | '染织类' | '陶瓷类' | '木作类' | '刺绣类' | '编织类';
+
+/**
  * 技艺步骤
  */
 export interface CraftStep {
@@ -17,5 +22,14 @@ export interface Craft {
   name: string;
   summary: string;
   coverColor: string;
+  category: CraftCategory;
   steps: CraftStep[];
+}
+
+/**
+ * 筛选参数
+ */
+export interface CraftFilterParams {
+  keyword?: string;
+  category?: CraftCategory | 'all';
 }
