@@ -1,32 +1,33 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Tab, TabGroup, TabList } from '@headlessui/react';
 import { MagnifyingGlassIcon, XMarkIcon, FunnelIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { filterCrafts, getAllCategories, getAllCrafts } from '../data/crafts';
+import { filterCrafts, getAllCategories } from '../data/crafts';
 import CraftCard from '../components/CraftCard';
+import FavoriteList from '../components/FavoriteList';
 import type { CraftCategory } from '../types/craft';
 import { useFavorites } from '../hooks/useFavorites';
 
 /**
  * 技艺列表页
+ *
+ * 包含「全部技艺」与「我的收藏」两个 Tab：
+ * - 全部技艺：内置搜索与分类筛选，展示所有技艺
+ * - 我的收藏：由独立的 FavoriteList 组件承载，同样内置搜索与分类筛选
+ *
+ * Tab 状态通过 URL 查询参数 `?tab=favorites` 同步，
+ * 确保从顶栏快捷入口、浏览器刷新、复制链接等场景下均能正确定位到对应 Tab。
  */
 export default function CraftListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialTab = searchParams.get('tab') === 'favorites' ? 1 : 0;
-  const [tabIndex, setTabIndex] = useState(initialTab);
+  const tabIndex = searchParams.get('tab') === 'favorites' ? 1 : 0;
 
   const [keyword, setKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CraftCategory | 'all'>('all');
   const categories = useMemo(() => getAllCategories(), []);
   const { ids: favoriteIds } = useFavorites();
 
-  useEffect(() => {
-    const target = searchParams.get('tab') === 'favorites' ? 1 : 0;
-    setTabIndex(target);
-  }, [searchParams]);
-
   const handleTabChange = (index: number) => {
-    setTabIndex(index);
     if (index === 1) {
       setSearchParams({ tab: 'favorites' });
     } else {
@@ -37,11 +38,6 @@ export default function CraftListPage() {
   const filteredCrafts = useMemo(() => {
     return filterCrafts({ keyword, category: selectedCategory });
   }, [keyword, selectedCategory]);
-
-  const favoriteCrafts = useMemo(() => {
-    const all = getAllCrafts();
-    return all.filter((craft) => favoriteIds.includes(craft.id));
-  }, [favoriteIds]);
 
   const hasActiveFilter = keyword.trim() !== '' || selectedCategory !== 'all';
 
@@ -187,28 +183,7 @@ export default function CraftListPage() {
         </Tab.Panel>
 
         <Tab.Panel>
-          {favoriteCrafts.length > 0 ? (
-            <>
-              <p className="mb-6 text-sm text-gray-500">
-                已收藏 <span className="font-medium text-heritage-600">{favoriteCrafts.length}</span> 项技艺，点击卡片右上角可取消收藏。
-              </p>
-              <div className="grid gap-6 sm:grid-cols-2">
-                {favoriteCrafts.map((craft) => (
-                  <CraftCard key={craft.id} craft={craft} />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 py-16 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-                <HeartIcon className="h-8 w-8 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900">还没有收藏</h3>
-              <p className="mx-auto mt-2 max-w-sm text-sm text-gray-500">
-                浏览全部技艺，点击卡片或详情页的爱心图标即可收藏喜欢的技艺。
-              </p>
-            </div>
-          )}
+          <FavoriteList />
         </Tab.Panel>
       </TabGroup>
     </div>

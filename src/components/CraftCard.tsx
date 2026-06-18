@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { Craft } from '../types/craft';
 import FavoriteButton from './FavoriteButton';
@@ -21,10 +21,14 @@ const categoryBadgeColors: Record<string, string> = {
  */
 export default function CraftCard({ craft }: CraftCardProps) {
   const badgeColor = categoryBadgeColors[craft.category] || 'bg-gray-100 text-gray-700';
+  const location = useLocation();
+
+  const detailState = { from: location.pathname + location.search };
 
   return (
     <Link
-      to={`/craft/${craft.id}`}
+      to={{ pathname: `/craft/${craft.id}` }}
+      state={detailState}
       className="group block overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm transition hover:border-heritage-300 hover:shadow-md"
     >
       <div

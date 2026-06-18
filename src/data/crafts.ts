@@ -31,12 +31,14 @@ export function getAllCategories(): CraftCategory[] {
  * @param params 筛选参数
  * @param params.keyword 关键词，按名称和简介模糊匹配
  * @param params.category 分类，'all' 表示全部分类
+ * @param source 可选，指定筛选的数据源；不传则使用完整的 crafts 列表
  */
-export function filterCrafts(params: CraftFilterParams): Craft[] {
+export function filterCrafts(params: CraftFilterParams, source?: Craft[]): Craft[] {
   const { keyword = '', category = 'all' } = params;
   const trimmedKeyword = keyword.trim().toLowerCase();
+  const data = source ?? crafts;
 
-  return crafts.filter((craft) => {
+  return data.filter((craft) => {
     const matchesCategory = category === 'all' || craft.category === category;
 
     if (!trimmedKeyword) {
