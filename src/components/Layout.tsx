@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { SparklesIcon, HeartIcon, BookOpenIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon, HeartIcon, BookOpenIcon, ScaleIcon } from '@heroicons/react/24/outline';
 import { useFavorites } from '../hooks/useFavorites';
+import { useCompare } from '../hooks/useCompare';
 
 /**
  * 全局布局：顶栏 + 主内容区
@@ -10,7 +11,9 @@ export default function Layout() {
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
   const isDictionary = location.pathname === '/dictionary';
+  const isCompare = location.pathname === '/compare';
   const { ids: favoriteIds } = useFavorites();
+  const { count: compareCount, maxCount: compareMaxCount } = useCompare();
 
   const goToFavorites = () => {
     navigate('/?tab=favorites');
@@ -24,11 +27,34 @@ export default function Layout() {
             <SparklesIcon className="h-7 w-7" aria-hidden="true" />
             <span className="font-serif text-xl font-semibold">非遗技艺</span>
           </Link>
-          <nav className="flex items-center gap-3">
+          <nav className="flex items-center gap-2 sm:gap-3">
+            <Link
+              to="/compare"
+              className={[
+                'inline-flex items-center gap-1.5 rounded-md px-2.5 sm:px-3 py-1.5 text-sm transition',
+                isCompare
+                  ? 'bg-heritage-100 text-heritage-800'
+                  : 'text-heritage-700 hover:bg-heritage-50 hover:text-heritage-900',
+              ].join(' ')}
+              title="技艺流程对比"
+            >
+              <ScaleIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">技艺对比</span>
+              {compareCount > 0 && (
+                <span
+                  className={[
+                    'inline-flex items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-medium text-white',
+                    compareCount >= compareMaxCount ? 'bg-heritage-600' : 'bg-sky-500',
+                  ].join(' ')}
+                >
+                  {compareCount}
+                </span>
+              )}
+            </Link>
             <Link
               to="/dictionary"
               className={[
-                'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm transition',
+                'inline-flex items-center gap-1.5 rounded-md px-2.5 sm:px-3 py-1.5 text-sm transition',
                 isDictionary
                   ? 'bg-heritage-100 text-heritage-800'
                   : 'text-heritage-700 hover:bg-heritage-50 hover:text-heritage-900',
@@ -36,12 +62,12 @@ export default function Layout() {
               title="非遗术语词典"
             >
               <BookOpenIcon className="h-4 w-4" />
-              <span>术语词典</span>
+              <span className="hidden sm:inline">术语词典</span>
             </Link>
             <button
               type="button"
               onClick={goToFavorites}
-              className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-heritage-700 transition hover:bg-heritage-50 hover:text-heritage-900"
+              className="inline-flex items-center gap-1.5 rounded-md px-2.5 sm:px-3 py-1.5 text-sm text-heritage-700 transition hover:bg-heritage-50 hover:text-heritage-900"
               title="我的收藏"
             >
               <HeartIcon className="h-4 w-4" />
