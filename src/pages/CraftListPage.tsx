@@ -57,12 +57,12 @@ export default function CraftListPage() {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <FunnelIcon className="h-5 w-5 text-gray-400" />
+          <div className="flex w-full items-center gap-2 sm:w-auto">
+            <FunnelIcon className="h-5 w-5 shrink-0 text-gray-400" />
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value as CraftCategory | 'all')}
-              className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm focus:border-heritage-500 focus:outline-none focus:ring-2 focus:ring-heritage-500/20"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 shadow-sm focus:border-heritage-500 focus:outline-none focus:ring-2 focus:ring-heritage-500/20 sm:w-auto"
             >
               <option value="all">全部分类</option>
               {categories.map((category) => (
@@ -75,8 +75,8 @@ export default function CraftListPage() {
         </div>
 
         {hasActiveFilter && (
-          <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
-            <span>
+          <div className="mt-4 flex flex-col gap-2 text-sm text-gray-500 sm:flex-row sm:items-center sm:justify-between">
+            <span className="flex-1 break-words">
               找到 <span className="font-medium text-heritage-600">{filteredCrafts.length}</span> 个结果
               {keyword && (
                 <span>
@@ -92,7 +92,7 @@ export default function CraftListPage() {
             <button
               type="button"
               onClick={handleClearFilters}
-              className="text-heritage-600 hover:text-heritage-700 hover:underline"
+              className="self-end text-heritage-600 hover:text-heritage-700 hover:underline sm:self-auto"
             >
               清除筛选
             </button>

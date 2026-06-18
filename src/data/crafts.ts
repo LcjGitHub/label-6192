@@ -1,4 +1,5 @@
 import type { Craft, CraftCategory, CraftFilterParams } from '../types/craft';
+import { CATEGORY_ORDER } from '../types/craft';
 import craftsData from '../mock/crafts.json';
 
 const crafts = craftsData as Craft[];
@@ -18,11 +19,11 @@ export function getCraftById(id: string): Craft | undefined {
 }
 
 /**
- * 获取所有分类列表（去重）
+ * 获取所有分类列表（按固定顺序展示）
  */
 export function getAllCategories(): CraftCategory[] {
-  const categories = new Set(crafts.map((craft) => craft.category));
-  return Array.from(categories).sort();
+  const availableCategories = new Set(crafts.map((craft) => craft.category));
+  return CATEGORY_ORDER.filter((category) => availableCategories.has(category));
 }
 
 /**
