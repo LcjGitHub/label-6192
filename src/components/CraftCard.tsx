@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import type { Craft } from '../types/craft';
+import FavoriteButton from './FavoriteButton';
 
 interface CraftCardProps {
   craft: Craft;
@@ -27,10 +28,13 @@ export default function CraftCard({ craft }: CraftCardProps) {
       className="group block overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm transition hover:border-heritage-300 hover:shadow-md"
     >
       <div
-        className="flex h-32 items-center justify-center"
+        className="relative flex h-32 items-center justify-center"
         style={{ backgroundColor: craft.coverColor }}
       >
         <span className="font-serif text-3xl font-bold text-white/95">{craft.name}</span>
+        <div className="absolute right-3 top-3">
+          <FavoriteButton craftId={craft.id} size="md" className="p-1.5 bg-white/20 hover:bg-white/30 text-white hover:text-white" />
+        </div>
       </div>
       <div className="p-5">
         <div className="mb-2 flex items-center gap-2">

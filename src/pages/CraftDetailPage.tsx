@@ -5,6 +5,7 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { getCraftById } from '../data/crafts';
 import StepSwiper from '../components/StepSwiper';
 import StepTabs from '../components/StepTabs';
+import FavoriteButton from '../components/FavoriteButton';
 
 type ViewMode = 'swiper' | 'tabs';
 
@@ -41,11 +42,14 @@ export default function CraftDetailPage() {
       </Link>
 
       <header className="mb-8">
-        <div
-          className="mb-4 inline-block rounded-lg px-4 py-1.5 font-serif text-2xl font-bold text-white"
-          style={{ backgroundColor: craft.coverColor }}
-        >
-          {craft.name}
+        <div className="mb-4 flex items-center gap-3">
+          <div
+            className="inline-block rounded-lg px-4 py-1.5 font-serif text-2xl font-bold text-white"
+            style={{ backgroundColor: craft.coverColor }}
+          >
+            {craft.name}
+          </div>
+          <FavoriteButton craftId={craft.id} size="lg" className="p-2 hover:bg-gray-100" />
         </div>
         <p className="max-w-2xl leading-relaxed text-gray-600">{craft.summary}</p>
       </header>
