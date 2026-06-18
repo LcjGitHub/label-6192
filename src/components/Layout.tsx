@@ -39,7 +39,7 @@ export default function Layout() {
               title="技艺流程对比"
             >
               <ScaleIcon className="h-4 w-4" />
-              <span className="hidden sm:inline">技艺对比</span>
+              <span className={compareCount > 0 ? 'inline' : 'hidden sm:inline'}>技艺对比</span>
               {compareCount > 0 && (
                 <span
                   className={[
@@ -71,7 +71,7 @@ export default function Layout() {
               title="我的收藏"
             >
               <HeartIcon className="h-4 w-4" />
-              <span className="hidden sm:inline">我的收藏</span>
+              <span className={favoriteIds.length > 0 ? 'inline' : 'hidden sm:inline'}>我的收藏</span>
               {favoriteIds.length > 0 && (
                 <span className="inline-flex items-center justify-center rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-medium text-white">
                   {favoriteIds.length}

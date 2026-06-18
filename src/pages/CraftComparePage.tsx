@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowLeftIcon,
   ScaleIcon,
   PlusIcon,
   TrashIcon,
   XMarkIcon,
   ArrowRightIcon,
-  DocumentTextIcon,
   ListBulletIcon,
 } from '@heroicons/react/24/outline';
 import { getCraftById } from '../data/crafts';
@@ -30,10 +28,8 @@ function CompareCraftHeader({
   onRemove,
 }: {
   craft: Craft;
-  slotIndex?: number;
   onRemove: () => void;
 }) {
-
   return (
     <div className="relative overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm">
       <button
@@ -89,30 +85,6 @@ function CompareCraftHeader({
 }
 
 /**
- * 空槽位（引导选择技艺）
- */
-function EmptyCompareSlot({ slotIndex }: { slotIndex: number }) {
-  return (
-    <div className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-6 text-center">
-      <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm">
-        <PlusIcon className="h-7 w-7 text-gray-400" />
-      </div>
-      <h3 className="mb-1 text-base font-medium text-gray-700">对比槽位 {slotIndex + 1}</h3>
-      <p className="max-w-xs text-sm text-gray-500">
-        请从技艺列表页选择一门技艺，点击卡片上的「加入对比」按钮添加到此槽位
-      </p>
-      <Link
-        to="/"
-        className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-heritage-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-heritage-700"
-      >
-        <DocumentTextIcon className="h-4 w-4" />
-        前往技艺列表
-      </Link>
-    </div>
-  );
-}
-
-/**
  * 引导提示组件（未选满或未选择时展示）
  */
 function CompareGuide({ count, maxCount }: { count: number; maxCount: number }) {
@@ -134,7 +106,7 @@ function CompareGuide({ count, maxCount }: { count: number; maxCount: number }) 
             to="/"
             className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-amber-700 sm:shrink-0"
           >
-            选择技艺
+            前往技艺列表
             <ArrowRightIcon className="h-4 w-4" />
           </Link>
         </div>
@@ -259,16 +231,8 @@ export default function CraftComparePage() {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1 text-sm text-heritage-600 transition hover:text-heritage-800"
-        >
-          <ArrowLeftIcon className="h-4 w-4" />
-          返回技艺列表
-        </Link>
-
-        {count > 0 && (
+      {count > 0 && (
+        <div className="mb-6 flex justify-end">
           <button
             type="button"
             onClick={() => {
@@ -279,8 +243,8 @@ export default function CraftComparePage() {
             <TrashIcon className="h-4 w-4" />
             清空对比
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <section className="mb-8 text-center">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-heritage-100">
@@ -296,38 +260,34 @@ export default function CraftComparePage() {
 
       {count < maxCount && <CompareGuide count={count} maxCount={maxCount} />}
 
-      <section className="mb-10">
-        <div className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-500">
-          <span>技艺概览</span>
-          <span className="text-xs text-gray-400">（{count}/{maxCount}）</span>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2">
-          <div>
-            {craftA ? (
-              <CompareCraftHeader
-                craft={craftA}
-                slotIndex={0}
-                onRemove={() => removeFromCompare(craftA.id)}
-              />
-            ) : (
-              <EmptyCompareSlot slotIndex={0} />
-            )}
+      {count > 0 && (
+        <section className="mb-10">
+          <div className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-500">
+            <span>技艺概览</span>
+            <span className="text-xs text-gray-400">（{count}/{maxCount}）</span>
           </div>
-          <div>
-            {craftB ? (
-              <CompareCraftHeader
-                craft={craftB}
-                slotIndex={1}
-                onRemove={() => removeFromCompare(craftB.id)}
-              />
-            ) : (
-              <EmptyCompareSlot slotIndex={1} />
-            )}
+          <div className="grid gap-5 md:grid-cols-2">
+            <div>
+              {craftA && (
+                <CompareCraftHeader
+                  craft={craftA}
+                  onRemove={() => removeFromCompare(craftA.id)}
+                />
+              )}
+            </div>
+            <div>
+              {craftB && (
+                <CompareCraftHeader
+                  craft={craftB}
+                  onRemove={() => removeFromCompare(craftB.id)}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {isReadyForCompare ? (
+      {isReadyForCompare && (
         <section>
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
@@ -434,28 +394,6 @@ export default function CraftComparePage() {
                 </span>
               </li>
             </ul>
-          </div>
-        </section>
-      ) : (
-        <section className="rounded-xl border border-dashed border-gray-300 bg-gray-50 py-16 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
-            <ScaleIcon className="h-8 w-8 text-gray-400" />
-          </div>
-          <h3 className="text-lg font-medium text-gray-900">请选择两门技艺后查看对照</h3>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-gray-500">
-            对比表格需要同时选择两门技艺才能展示。
-            {count === 0
-              ? '请先前往技艺列表页选择你感兴趣的技艺加入对比。'
-              : `请再选择 ${maxCount - count} 门技艺以开始对比。`}
-          </p>
-          <div className="mt-5 flex items-center justify-center gap-3">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-heritage-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-heritage-700"
-            >
-              <DocumentTextIcon className="h-4 w-4" />
-              前往技艺列表
-            </Link>
           </div>
         </section>
       )}
