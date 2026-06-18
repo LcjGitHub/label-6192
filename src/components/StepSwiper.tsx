@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -26,6 +26,23 @@ export default function StepSwiper({
   progress = 0,
 }: StepSwiperProps) {
   const swiperRef = useRef<SwiperType | null>(null);
+  const isInternalChangeRef = useRef(false);
+
+  useEffect(() => {
+    const swiper = swiperRef.current;
+    if (!swiper || isInternalChangeRef.current) {
+      isInternalChangeRef.current = false;
+      return;
+    }
+    if (swiper.activeIndex !== activeIndex) {
+      swiper.slideTo(activeIndex);
+    }
+  }, [activeIndex]);
+
+  const handleSlideChange = (swiper: SwiperType) => {
+    isInternalChangeRef.current = true;
+    onSlideChange(swiper.activeIndex);
+  };
 
   return (
     <div className="relative">
@@ -37,7 +54,7 @@ export default function StepSwiper({
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
+        onSlideChange={handleSlideChange}
         pagination={{ clickable: true }}
         className="step-swiper rounded-xl pb-10"
       >

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Tab, TabGroup, TabList } from '@headlessui/react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
@@ -7,7 +7,6 @@ import StepSwiper from '../components/StepSwiper';
 import StepTabs from '../components/StepTabs';
 import FavoriteButton from '../components/FavoriteButton';
 import { useProgress } from '../hooks/useProgress';
-import { getProgress as readProgress } from '../utils/progress';
 
 type ViewMode = 'swiper' | 'tabs';
 
@@ -28,31 +27,35 @@ export default function CraftDetailPage() {
   const navigate = useNavigate();
   const state = location.state as DetailLocationState | null;
   const craft = id ? getCraftById(id) : undefined;
+  const { getProgress, updateProgress } = useProgress();
 
   const backHref = state?.from ?? '/';
 
   const [viewMode, setViewMode] = useState<ViewMode>('swiper');
-  const initialSavedProgress = craft ? readProgress(craft.id) : 0;
-  const totalSteps = craft?.steps.length ?? 1;
-  const initialIndex = initialSavedProgress > 0
-    ? Math.min(initialSavedProgress - 1, totalSteps - 1)
-    : 0;
-  const [activeStepIndex, setActiveStepIndex] = useState(initialIndex);
-
-  const { getProgress, updateProgress } = useProgress();
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const isFirstRenderRef = useRef(true);
+  const currentCraftIdRef = useRef<string | undefined>(craft?.id);
 
   useEffect(() => {
     if (!craft) return;
+
+    if (currentCraftIdRef.current !== craft.id) {
+      currentCraftIdRef.current = craft.id;
+      isFirstRenderRef.current = true;
+    }
+
+    if (isFirstRenderRef.current) {
+      const saved = getProgress(craft.id);
+      const total = craft.steps.length;
+      const targetIndex = saved > 0 ? Math.min(saved - 1, total - 1) : 0;
+      setActiveStepIndex(targetIndex);
+      isFirstRenderRef.current = false;
+      return;
+    }
+
     const stepOrder = activeStepIndex + 1;
     updateProgress(craft.id, stepOrder);
-  }, [activeStepIndex, craft?.id, updateProgress]);
-
-  useEffect(() => {
-    if (!craft) return;
-    const saved = readProgress(craft.id);
-    const targetIndex = saved > 0 ? Math.min(saved - 1, craft.steps.length - 1) : 0;
-    setActiveStepIndex(targetIndex);
-  }, [craft?.id]);
+  }, [craft?.id, activeStepIndex, craft, getProgress, updateProgress]);
 
   if (!craft) {
     return (

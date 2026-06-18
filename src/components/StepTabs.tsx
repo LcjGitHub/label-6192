@@ -1,5 +1,6 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/24/solid';
+import { CheckIcon as CheckSolidIcon } from '@heroicons/react/24/solid';
+import { CheckIcon } from '@heroicons/react/24/outline';
 import type { CraftStep } from '../types/craft';
 import StepPlaceholder from './StepPlaceholder';
 
@@ -45,25 +46,34 @@ export default function StepTabs({ steps, accentColor, selectedIndex, onChange, 
       </TabList>
 
       <TabPanels className="mt-6">
-        {steps.map((step) => (
-          <TabPanel key={step.id} className="outline-none">
-            <article className="overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm">
-              <StepPlaceholder step={step} accentColor={accentColor} />
-              <div className="p-6">
-                <div className="mb-2 flex items-center gap-2">
-                  <span
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full text-sm font-semibold text-white"
-                    style={{ backgroundColor: accentColor }}
-                  >
-                    {step.order}
-                  </span>
-                  <h3 className="font-serif text-xl font-semibold text-heritage-900">{step.title}</h3>
+        {steps.map((step) => {
+          const isCompleted = step.order <= progress;
+          return (
+            <TabPanel key={step.id} className="outline-none">
+              <article className="overflow-hidden rounded-xl border border-heritage-200 bg-white shadow-sm">
+                <StepPlaceholder step={step} accentColor={accentColor} />
+                <div className="p-6">
+                  <div className="mb-2 flex items-center gap-2">
+                    <span
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-full text-sm font-semibold text-white"
+                      style={{ backgroundColor: isCompleted ? '#16a34a' : accentColor }}
+                    >
+                      {isCompleted ? <CheckSolidIcon className="h-4 w-4" /> : step.order}
+                    </span>
+                    <h3 className="font-serif text-xl font-semibold text-heritage-900">{step.title}</h3>
+                    {isCompleted && (
+                      <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                        <CheckIcon className="h-3 w-3" />
+                        已学习
+                      </span>
+                    )}
+                  </div>
+                  <p className="leading-relaxed text-gray-600">{step.description}</p>
                 </div>
-                <p className="leading-relaxed text-gray-600">{step.description}</p>
-              </div>
-            </article>
-          </TabPanel>
-        ))}
+              </article>
+            </TabPanel>
+          );
+        })}
       </TabPanels>
     </TabGroup>
   );
