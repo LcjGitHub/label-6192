@@ -12,14 +12,15 @@ interface FavoriteListProps {
 /**
  * 独立的收藏列表展示组件
  *
- * 展示当前用户已收藏的全部技艺，接收外部传入的搜索关键词，
+ * 展示当前用户已收藏的全部技艺，搜索关键词由父组件统一管理（页面顶部搜索框），
  * 内置分类筛选，筛选范围限定在已收藏数据内；无收藏时给出引导性空状态。
  *
  * 设计要点：
- * 1. 搜索关键词由父组件传入，与全部技艺 Tab 共享搜索状态；
+ * 1. 搜索关键词由父组件传入，与全部技艺 Tab 共享页面顶部搜索框的状态；
  * 2. 分类筛选独立维护，在 favorites 内做二次过滤；
- * 3. 空状态使用统一的样式规范，与全部列表无结果态保持视觉一致；
- * 4. 通过 useFavorites Hook 订阅收藏变化，任意位置取消收藏会实时反映。
+ * 3. 清除按钮仅在有分类筛选时显示，纯搜索关键词时由顶部搜索框的清除按钮处理；
+ * 4. 空状态与统计栏的清除按钮避免重复，只在统计栏保留一处；
+ * 5. 通过 useFavorites Hook 订阅收藏变化，任意位置取消收藏会实时反映。
  */
 export default function FavoriteList({ keyword }: FavoriteListProps) {
   const [selectedCategory, setSelectedCategory] = useState<CraftCategory | 'all'>('all');
@@ -40,8 +41,9 @@ export default function FavoriteList({ keyword }: FavoriteListProps) {
   }, [keyword, selectedCategory, favoriteCrafts]);
 
   const hasActiveFilter = keyword.trim() !== '' || selectedCategory !== 'all';
+  const hasCategoryFilter = selectedCategory !== 'all';
 
-  const handleClearFilters = () => {
+  const handleClearCategory = () => {
     setSelectedCategory('all');
   };
 
@@ -97,10 +99,10 @@ export default function FavoriteList({ keyword }: FavoriteListProps) {
               </>
             )}
           </span>
-          {hasActiveFilter && (
+          {hasCategoryFilter && (
             <button
               type="button"
-              onClick={handleClearFilters}
+              onClick={handleClearCategory}
               className="self-end text-heritage-600 hover:text-heritage-700 hover:underline sm:self-auto"
             >
               清除分类筛选
@@ -124,15 +126,6 @@ export default function FavoriteList({ keyword }: FavoriteListProps) {
           <p className="mx-auto mt-2 max-w-sm text-sm text-gray-500">
             已收藏的技艺中没有符合条件的内容，请尝试调整搜索关键词或更换分类筛选条件。
           </p>
-          {hasActiveFilter && (
-            <button
-              type="button"
-              onClick={handleClearFilters}
-              className="mt-4 inline-flex items-center rounded-lg bg-heritage-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-heritage-700"
-            >
-              清除分类筛选
-            </button>
-          )}
         </div>
       )}
     </div>
