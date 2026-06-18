@@ -18,6 +18,8 @@ import type { CraftProgressMap, ProgressListener } from '../types/craft';
 
 /** localStorage 中进度数据的存储键 */
 const STORAGE_KEY = 'heritage-craft-progress';
+/** localStorage 中浏览位置数据的存储键 */
+const VIEW_POSITION_KEY = 'heritage-craft-view-position';
 
 /** 进度变更监听器类型 */
 type Listener = ProgressListener;
@@ -149,4 +151,93 @@ export function subscribe(listener: Listener): () => void {
   return () => {
     listeners.delete(listener);
   };
+}
+
+/**
+ * 从 localStorage 读取浏览位置数据
+ * @returns 浏览位置记录对象；读取失败或无数据时返回空对象
+ */
+function readViewPosition(): CraftProgressMap {
+  try {
+    const raw = localStorage.getItem(VIEW_POSITION_KEY);
+    if (!raw) return {};
+    const obj = JSON.parse(raw);
+    if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+      const result: CraftProgressMap = {};
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value === 'number' && value >= 0) {
+          result[key] = value;
+        }
+      }
+      return result;
+    }
+    return {};
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * 将浏览位置数据写入 localStorage
+ * @param viewPosition 待写入的浏览位置对象
+ */
+function writeViewPosition(viewPosition: CraftProgressMap): void {
+  try {
+    localStorage.setItem(VIEW_POSITION_KEY, JSON.stringify(viewPosition));
+  } catch {
+    // ignore storage errors (quota, privacy mode, etc.)
+  }
+}
+
+/**
+ * 获取指定技艺的浏览位置
+ * @param craftId 技艺 id
+ * @returns 最后浏览的步骤序号（从 1 开始），未浏览过返回 0
+ */
+export function getViewPosition(craftId: string): number {
+  const viewPosition = readViewPosition();
+  return viewPosition[craftId] ?? 0;
+}
+
+/**
+ * 设置指定技艺的浏览位置
+ * @remarks 与学习进度不同，浏览位置支持后退，记录用户最后看到的步骤
+ * @param craftId 技艺 id
+ * @param stepOrder 当前浏览的步骤序号（从 1 开始）
+ * @returns 是否真的更新了浏览位置
+ */
+export function setViewPosition(craftId: string, stepOrder: number): boolean {
+  const viewPosition = readViewPosition();
+  const current = viewPosition[craftId] ?? 0;
+  if (stepOrder !== current) {
+    viewPosition[craftId] = stepOrder;
+    writeViewPosition(viewPosition);
+    notify();
+    return true;
+  }
+  return false;
+}
+
+/**
+ * 重置指定技艺的浏览位置
+ * @param craftId 技艺 id
+ */
+export function resetViewPosition(craftId: string): void {
+  const viewPosition = readViewPosition();
+  if (viewPosition[craftId] !== undefined) {
+    delete viewPosition[craftId];
+    writeViewPosition(viewPosition);
+    notify();
+  }
+}
+
+/**
+ * 清空所有浏览位置
+ */
+export function clearAllViewPosition(): void {
+  const viewPosition = readViewPosition();
+  if (Object.keys(viewPosition).length > 0) {
+    writeViewPosition({});
+    notify();
+  }
 }

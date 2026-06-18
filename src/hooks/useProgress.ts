@@ -5,6 +5,9 @@ import {
   updateProgress as updateProg,
   resetProgress as resetProg,
   subscribe,
+  getViewPosition,
+  setViewPosition,
+  resetViewPosition,
 } from '../utils/progress';
 
 /**
@@ -32,13 +35,37 @@ import {
  * - `getProgress(craftId)`：查询某技艺的已学最高步骤数
  * - `updateProgress(craftId, stepOrder)`：更新某技艺的进度（仅前进）
  * - `resetProgress(craftId)`：重置某技艺的进度
+ * - `getViewPosition(craftId)`：查询某技艺的最后浏览位置
+ * - `setViewPosition(craftId, stepOrder)`：更新某技艺的浏览位置（支持后退）
+ * - `resetViewPosition(craftId)`：重置某技艺的浏览位置
  */
 export function useProgress() {
   const [progressMap, setProgressMap] = useState<CraftProgressMap>(() => getAllProgress());
+  const [viewPositionMap, setViewPositionMap] = useState<CraftProgressMap>(() => {
+    const result: CraftProgressMap = {};
+    const allProgress = getAllProgress();
+    for (const [key] of Object.entries(allProgress)) {
+      result[key] = getViewPosition(key);
+    }
+    return result;
+  });
 
   useEffect(() => {
     const unsubscribe = subscribe(() => {
       setProgressMap(getAllProgress());
+      setViewPositionMap((prev) => {
+        const next: CraftProgressMap = { ...prev };
+        const allProgress = getAllProgress();
+        for (const [key] of Object.entries(allProgress)) {
+          next[key] = getViewPosition(key);
+        }
+        for (const [key] of Object.entries(prev)) {
+          if (!(key in allProgress)) {
+            next[key] = getViewPosition(key);
+          }
+        }
+        return next;
+      });
     });
     return unsubscribe;
   }, []);
@@ -55,10 +82,29 @@ export function useProgress() {
     resetProg(craftId);
   }, []);
 
+  const getViewPos = useCallback((craftId: string): number => {
+    return viewPositionMap[craftId] ?? getViewPosition(craftId);
+  }, [viewPositionMap]);
+
+  const setViewPos = useCallback((craftId: string, stepOrder: number): boolean => {
+    const result = setViewPosition(craftId, stepOrder);
+    if (result) {
+      setViewPositionMap((prev) => ({ ...prev, [craftId]: stepOrder }));
+    }
+    return result;
+  }, []);
+
+  const resetViewPos = useCallback((craftId: string): void => {
+    resetViewPosition(craftId);
+  }, []);
+
   return {
     progressMap,
     getProgress: getProg,
     updateProgress: update,
     resetProgress: reset,
+    getViewPosition: getViewPos,
+    setViewPosition: setViewPos,
+    resetViewPosition: resetViewPos,
   };
 }

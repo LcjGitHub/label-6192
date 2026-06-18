@@ -27,7 +27,7 @@ export default function CraftDetailPage() {
   const navigate = useNavigate();
   const state = location.state as DetailLocationState | null;
   const craft = id ? getCraftById(id) : undefined;
-  const { getProgress, updateProgress } = useProgress();
+  const { getProgress, getViewPosition } = useProgress();
 
   const backHref = state?.from ?? '/';
 
@@ -45,17 +45,13 @@ export default function CraftDetailPage() {
     }
 
     if (isFirstRenderRef.current) {
-      const saved = getProgress(craft.id);
+      const savedViewPos = getViewPosition(craft.id);
       const total = craft.steps.length;
-      const targetIndex = saved > 0 ? Math.min(saved - 1, total - 1) : 0;
+      const targetIndex = savedViewPos > 0 ? Math.min(savedViewPos - 1, total - 1) : 0;
       setActiveStepIndex(targetIndex);
       isFirstRenderRef.current = false;
-      return;
     }
-
-    const stepOrder = activeStepIndex + 1;
-    updateProgress(craft.id, stepOrder);
-  }, [craft?.id, activeStepIndex, craft, getProgress, updateProgress]);
+  }, [craft?.id, craft, getViewPosition]);
 
   if (!craft) {
     return (
@@ -158,6 +154,7 @@ export default function CraftDetailPage() {
           steps={craft.steps}
           accentColor={craft.coverColor}
           activeIndex={activeStepIndex}
+          craftId={craft.id}
           onSlideChange={setActiveStepIndex}
           progress={getProgress(craft.id)}
         />
@@ -166,6 +163,7 @@ export default function CraftDetailPage() {
           steps={craft.steps}
           accentColor={craft.coverColor}
           selectedIndex={activeStepIndex}
+          craftId={craft.id}
           onChange={setActiveStepIndex}
           progress={getProgress(craft.id)}
         />

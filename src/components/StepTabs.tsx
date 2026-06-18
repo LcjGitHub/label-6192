@@ -1,13 +1,16 @@
+import { useCallback } from 'react';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { CheckIcon as CheckSolidIcon } from '@heroicons/react/24/solid';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import type { CraftStep } from '../types/craft';
 import StepPlaceholder from './StepPlaceholder';
+import { useProgress } from '../hooks/useProgress';
 
 interface StepTabsProps {
   steps: CraftStep[];
   accentColor: string;
   selectedIndex: number;
+  craftId: string;
   onChange: (index: number) => void;
   progress?: number;
 }
@@ -15,9 +18,18 @@ interface StepTabsProps {
 /**
  * 步骤 Headless UI Tab 分步浏览
  */
-export default function StepTabs({ steps, accentColor, selectedIndex, onChange, progress = 0 }: StepTabsProps) {
+export default function StepTabs({ steps, accentColor, selectedIndex, craftId, onChange, progress = 0 }: StepTabsProps) {
+  const { setViewPosition, updateProgress } = useProgress();
+
+  const handleTabChange = useCallback((index: number) => {
+    const stepOrder = index + 1;
+    setViewPosition(craftId, stepOrder);
+    updateProgress(craftId, stepOrder);
+    onChange(index);
+  }, [craftId, onChange, setViewPosition, updateProgress]);
+
   return (
-    <TabGroup selectedIndex={selectedIndex} onChange={onChange}>
+    <TabGroup selectedIndex={selectedIndex} onChange={handleTabChange}>
       <TabList className="flex flex-wrap gap-2 rounded-xl bg-heritage-100 p-2">
         {steps.map((step) => {
           const isCompleted = step.order <= progress;

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -6,11 +6,13 @@ import { ChevronLeftIcon, ChevronRightIcon, CheckIcon } from '@heroicons/react/2
 import { CheckIcon as CheckSolidIcon } from '@heroicons/react/24/solid';
 import type { CraftStep } from '../types/craft';
 import StepPlaceholder from './StepPlaceholder';
+import { useProgress } from '../hooks/useProgress';
 
 interface StepSwiperProps {
   steps: CraftStep[];
   accentColor: string;
   activeIndex: number;
+  craftId: string;
   onSlideChange: (index: number) => void;
   progress?: number;
 }
@@ -22,11 +24,13 @@ export default function StepSwiper({
   steps,
   accentColor,
   activeIndex,
+  craftId,
   onSlideChange,
   progress = 0,
 }: StepSwiperProps) {
   const swiperRef = useRef<SwiperType | null>(null);
   const isInternalChangeRef = useRef(false);
+  const { setViewPosition, updateProgress } = useProgress();
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -39,10 +43,14 @@ export default function StepSwiper({
     }
   }, [activeIndex]);
 
-  const handleSlideChange = (swiper: SwiperType) => {
+  const handleSlideChange = useCallback((swiper: SwiperType) => {
     isInternalChangeRef.current = true;
-    onSlideChange(swiper.activeIndex);
-  };
+    const newIndex = swiper.activeIndex;
+    const stepOrder = newIndex + 1;
+    setViewPosition(craftId, stepOrder);
+    updateProgress(craftId, stepOrder);
+    onSlideChange(newIndex);
+  }, [craftId, onSlideChange, setViewPosition, updateProgress]);
 
   return (
     <div className="relative">
