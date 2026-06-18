@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-heritage-50 text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .step-placeholder {
+    @apply flex aspect-video w-full items-center justify-center rounded-lg text-lg font-medium text-white/90;
+  }
+}

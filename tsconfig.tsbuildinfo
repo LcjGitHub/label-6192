@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/craftcard.tsx","./src/components/layout.tsx","./src/components/stepplaceholder.tsx","./src/components/stepswiper.tsx","./src/components/steptabs.tsx","./src/data/crafts.ts","./src/pages/craftdetailpage.tsx","./src/pages/craftlistpage.tsx","./src/types/craft.ts"],"version":"5.9.3"}

@@ -1,0 +1,95 @@
+[
+  {
+    "id": "paper-cutting",
+    "name": "剪纸",
+    "summary": "以剪刀或刻刀在纸上剪刻纹样，寓意吉祥，是流传广泛的民间装饰艺术。",
+    "coverColor": "#c62828",
+    "steps": [
+      {
+        "id": "pc-1",
+        "order": 1,
+        "title": "选纸备具",
+        "description": "选用质地柔韧、颜色喜庆的红纸或宣纸，准备剪刀、刻刀与垫板，确保工具锋利便于精细剪刻。",
+        "imagePlaceholder": "选纸与工具"
+      },
+      {
+        "id": "pc-2",
+        "order": 2,
+        "title": "构思纹样",
+        "description": "根据节庆或用途确定主题，如窗花、喜字、生肖等，先用铅笔在纸上轻轻勾勒大致轮廓。",
+        "imagePlaceholder": "纹样构思"
+      },
+      {
+        "id": "pc-3",
+        "order": 3,
+        "title": "折叠对称",
+        "description": "对称图案需将纸张多次对折，折痕清晰平整，以便一次剪出完整对称纹样，常见于窗花制作。",
+        "imagePlaceholder": "折叠对称"
+      },
+      {
+        "id": "pc-4",
+        "order": 4,
+        "title": "剪刻成形",
+        "description": "先剪大轮廓，再处理镂空与细部线条；刻刀适合精细部分，剪刀适合外缘与曲线，注意保持纸面平整。",
+        "imagePlaceholder": "剪刻过程"
+      },
+      {
+        "id": "pc-5",
+        "order": 5,
+        "title": "揭纸修整",
+        "description": "轻轻展开纸张，检查是否有粘连或毛边，用剪刀修齐边缘，必要时用软毛刷清理纸屑。",
+        "imagePlaceholder": "揭纸修整"
+      },
+      {
+        "id": "pc-6",
+        "order": 6,
+        "title": "装裱展示",
+        "description": "将成品粘贴于窗户、门楣或画框中，搭配适当衬纸与背景，完成传统剪纸作品的展示。",
+        "imagePlaceholder": "装裱展示"
+      }
+    ]
+  },
+  {
+    "id": "indigo-dye",
+    "name": "蓝染",
+    "summary": "以天然靛蓝为染料，通过浸染与氧化呈现层次蓝色，常见于蜡染、扎染等传统工艺。",
+    "coverColor": "#1565c0",
+    "steps": [
+      {
+        "id": "id-1",
+        "order": 1,
+        "title": "调制染缸",
+        "description": "将靛蓝、碱剂与还原剂按比例加入染缸，控制温度与 pH，待染液呈黄绿色并出现泡沫即为可染状态。",
+        "imagePlaceholder": "染缸调制"
+      },
+      {
+        "id": "id-2",
+        "order": 2,
+        "title": "预处理布料",
+        "description": "选用棉、麻等天然纤维布料，洗净去浆并充分浸湿，使纤维均匀吸水便于后续吸附染料。",
+        "imagePlaceholder": "布料预处理"
+      },
+      {
+        "id": "id-3",
+        "order": 3,
+        "title": "扎结防染",
+        "description": "用线绳、夹具或蜡封等方式在布面形成防染区域，扎结力度与方式决定最终纹样与留白效果。",
+        "imagePlaceholder": "扎结防染"
+      },
+      {
+        "id": "id-4",
+        "order": 4,
+        "title": "浸染氧化",
+        "description": "将布料浸入染液，反复浸染并在空气中氧化，每次氧化后蓝色加深，可根据需要重复多遍。",
+        "imagePlaceholder": "浸染氧化"
+      },
+      {
+        "id": "id-5",
+        "order": 5,
+        "title": "清洗固色",
+        "description": "染毕后拆线或去蜡，用清水反复漂洗至水清，必要时使用固色剂，避免后续褪色。",
+        "imagePlaceholder": "清洗固色"
+      }
+    ]
+  }
+]
