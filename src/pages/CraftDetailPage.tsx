@@ -7,6 +7,7 @@ import StepSwiper from '../components/StepSwiper';
 import StepTabs from '../components/StepTabs';
 import FavoriteButton from '../components/FavoriteButton';
 import { useProgress } from '../hooks/useProgress';
+import { getViewPosition as readViewPosition } from '../utils/progress';
 
 type ViewMode = 'swiper' | 'tabs';
 
@@ -27,13 +28,17 @@ export default function CraftDetailPage() {
   const navigate = useNavigate();
   const state = location.state as DetailLocationState | null;
   const craft = id ? getCraftById(id) : undefined;
-  const { getProgress, getViewPosition } = useProgress();
+  const { getProgress } = useProgress();
 
   const backHref = state?.from ?? '/';
 
   const [viewMode, setViewMode] = useState<ViewMode>('swiper');
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const isFirstRenderRef = useRef(true);
+  const [activeStepIndex, setActiveStepIndex] = useState<number>(() => {
+    if (!craft) return 0;
+    const savedViewPos = readViewPosition(craft.id);
+    const total = craft.steps.length;
+    return savedViewPos > 0 ? Math.min(savedViewPos - 1, total - 1) : 0;
+  });
   const currentCraftIdRef = useRef<string | undefined>(craft?.id);
 
   useEffect(() => {
@@ -41,17 +46,12 @@ export default function CraftDetailPage() {
 
     if (currentCraftIdRef.current !== craft.id) {
       currentCraftIdRef.current = craft.id;
-      isFirstRenderRef.current = true;
-    }
-
-    if (isFirstRenderRef.current) {
-      const savedViewPos = getViewPosition(craft.id);
+      const savedViewPos = readViewPosition(craft.id);
       const total = craft.steps.length;
       const targetIndex = savedViewPos > 0 ? Math.min(savedViewPos - 1, total - 1) : 0;
       setActiveStepIndex(targetIndex);
-      isFirstRenderRef.current = false;
     }
-  }, [craft?.id, craft, getViewPosition]);
+  }, [craft?.id, craft]);
 
   if (!craft) {
     return (

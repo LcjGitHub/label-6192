@@ -200,6 +200,14 @@ export function getViewPosition(craftId: string): number {
 }
 
 /**
+ * 获取所有技艺的浏览位置
+ * @returns 所有浏览位置记录对象
+ */
+export function getAllViewPosition(): CraftProgressMap {
+  return readViewPosition();
+}
+
+/**
  * 设置指定技艺的浏览位置
  * @remarks 与学习进度不同，浏览位置支持后退，记录用户最后看到的步骤
  * @param craftId 技艺 id

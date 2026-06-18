@@ -6,6 +6,7 @@ import {
   resetProgress as resetProg,
   subscribe,
   getViewPosition,
+  getAllViewPosition,
   setViewPosition,
   resetViewPosition,
 } from '../utils/progress';
@@ -41,31 +42,12 @@ import {
  */
 export function useProgress() {
   const [progressMap, setProgressMap] = useState<CraftProgressMap>(() => getAllProgress());
-  const [viewPositionMap, setViewPositionMap] = useState<CraftProgressMap>(() => {
-    const result: CraftProgressMap = {};
-    const allProgress = getAllProgress();
-    for (const [key] of Object.entries(allProgress)) {
-      result[key] = getViewPosition(key);
-    }
-    return result;
-  });
+  const [viewPositionMap, setViewPositionMap] = useState<CraftProgressMap>(() => getAllViewPosition());
 
   useEffect(() => {
     const unsubscribe = subscribe(() => {
       setProgressMap(getAllProgress());
-      setViewPositionMap((prev) => {
-        const next: CraftProgressMap = { ...prev };
-        const allProgress = getAllProgress();
-        for (const [key] of Object.entries(allProgress)) {
-          next[key] = getViewPosition(key);
-        }
-        for (const [key] of Object.entries(prev)) {
-          if (!(key in allProgress)) {
-            next[key] = getViewPosition(key);
-          }
-        }
-        return next;
-      });
+      setViewPositionMap(getAllViewPosition());
     });
     return unsubscribe;
   }, []);
