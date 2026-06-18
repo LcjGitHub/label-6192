@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { SparklesIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon, HeartIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 import { useFavorites } from '../hooks/useFavorites';
 
 /**
@@ -9,6 +9,7 @@ export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
+  const isDictionary = location.pathname === '/dictionary';
   const { ids: favoriteIds } = useFavorites();
 
   const goToFavorites = () => {
@@ -24,6 +25,19 @@ export default function Layout() {
             <span className="font-serif text-xl font-semibold">非遗技艺</span>
           </Link>
           <nav className="flex items-center gap-3">
+            <Link
+              to="/dictionary"
+              className={[
+                'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm transition',
+                isDictionary
+                  ? 'bg-heritage-100 text-heritage-800'
+                  : 'text-heritage-700 hover:bg-heritage-50 hover:text-heritage-900',
+              ].join(' ')}
+              title="非遗术语词典"
+            >
+              <BookOpenIcon className="h-4 w-4" />
+              <span className="hidden sm:inline">术语词典</span>
+            </Link>
             <button
               type="button"
               onClick={goToFavorites}
